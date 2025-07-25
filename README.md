@@ -11,7 +11,7 @@ Driver for INA219/INA220 bidirectional current/power monitor.
 ## Installation
 
 ```sh
-idf.py add-dependency "esp-idf-lib/ina219^1.0.0
+idf.py add-dependency esp-idf-lib/ina219^1.0.0
 ```
 
 ## Support
