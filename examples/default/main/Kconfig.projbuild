@@ -13,5 +13,5 @@ menu "Example configuration"
             GND (`INA219_ADDR_GND_GND`, or `0x40`). See available options in
             ina219.h.
 
-    rsource "../../../../devtools/Kconfig.i2c"
+    rsource "../../../Kconfig.i2c"
 endmenu
