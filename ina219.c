@@ -69,7 +69,8 @@ static const char *TAG = "ina219";
 #define CHECK(x) do { esp_err_t __; if ((__ = x) != ESP_OK) return __; } while (0)
 #define CHECK_ARG(VAL) do { if (!(VAL)) return ESP_ERR_INVALID_ARG; } while (0)
 
-static const float u_shunt_max[] = {
+static const float u_shunt_max[] =
+{
     [INA219_GAIN_1]     = 0.04,
     [INA219_GAIN_0_5]   = 0.08,
     [INA219_GAIN_0_25]  = 0.16,
@@ -164,8 +165,8 @@ esp_err_t ina219_reset(ina219_t *dev)
 }
 
 esp_err_t ina219_configure(ina219_t *dev, ina219_bus_voltage_range_t u_range,
-        ina219_gain_t gain, ina219_resolution_t u_res,
-        ina219_resolution_t i_res, ina219_mode_t mode)
+                           ina219_gain_t gain, ina219_resolution_t u_res,
+                           ina219_resolution_t i_res, ina219_mode_t mode)
 {
     CHECK_ARG(dev);
     CHECK_ARG(u_range <= INA219_BUS_RANGE_32V);

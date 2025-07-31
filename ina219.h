@@ -67,7 +67,8 @@ extern "C" {
 /**
  * Bus voltage range
  */
-typedef enum {
+typedef enum
+{
     INA219_BUS_RANGE_16V = 0, //!< 16V FSR
     INA219_BUS_RANGE_32V      //!< 32V FSR (default)
 } ina219_bus_voltage_range_t;
@@ -75,7 +76,8 @@ typedef enum {
 /**
  * PGA gain for shunt voltage
  */
-typedef enum {
+typedef enum
+{
     INA219_GAIN_1 = 0, //!< Gain: 1, Range: +-40 mV
     INA219_GAIN_0_5,   //!< Gain: 1/2, Range: +-80 mV
     INA219_GAIN_0_25,  //!< Gain: 1/4, Range: +-160 mV
@@ -85,7 +87,8 @@ typedef enum {
 /**
  * ADC resolution/averaging
  */
-typedef enum {
+typedef enum
+{
     INA219_RES_9BIT_1S    = 0,  //!< 9 bit, 1 sample, conversion time 84 us
     INA219_RES_10BIT_1S   = 1,  //!< 10 bit, 1 sample, conversion time 148 us
     INA219_RES_11BIT_1S   = 2,  //!< 11 bit, 1 sample, conversion time 276 us
@@ -102,7 +105,8 @@ typedef enum {
 /**
  * Operating mode
  */
-typedef enum {
+typedef enum
+{
     INA219_MODE_POWER_DOWN = 0, //!< Power-done
     INA219_MODE_TRIG_SHUNT,     //!< Shunt voltage, triggered
     INA219_MODE_TRIG_BUS,       //!< Bus voltage, triggered
@@ -178,8 +182,8 @@ esp_err_t ina219_reset(ina219_t *dev);
  * @return `ESP_OK` on success
  */
 esp_err_t ina219_configure(ina219_t *dev, ina219_bus_voltage_range_t u_range,
-        ina219_gain_t gain, ina219_resolution_t u_res,
-        ina219_resolution_t i_res, ina219_mode_t mode);
+                           ina219_gain_t gain, ina219_resolution_t u_res,
+                           ina219_resolution_t i_res, ina219_mode_t mode);
 
 /**
  * @brief Get bus voltage range

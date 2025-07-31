@@ -23,7 +23,7 @@ void task(void *pvParameters)
 
     ESP_LOGI(TAG, "Configuring INA219");
     ESP_ERROR_CHECK(ina219_configure(&dev, INA219_BUS_RANGE_16V, INA219_GAIN_0_125,
-            INA219_RES_12BIT_1S, INA219_RES_12BIT_1S, INA219_MODE_CONT_SHUNT_BUS));
+                                     INA219_RES_12BIT_1S, INA219_RES_12BIT_1S, INA219_MODE_CONT_SHUNT_BUS));
 
     ESP_LOGI(TAG, "Calibrating INA219");
 
@@ -42,7 +42,7 @@ void task(void *pvParameters)
          * sdkconfig. See sdkconfig.defaults.esp32 and
          * sdkconfig.defaults.esp8266  */
         printf("VBUS: %.04f V, VSHUNT: %.04f mV, IBUS: %.04f mA, PBUS: %.04f mW\n",
-                bus_voltage, shunt_voltage * 1000, current * 1000, power * 1000);
+               bus_voltage, shunt_voltage * 1000, current * 1000, power * 1000);
 
         vTaskDelay(pdMS_TO_TICKS(500));
     }
