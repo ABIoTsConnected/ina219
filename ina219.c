@@ -97,7 +97,7 @@ typedef enum
  */
 typedef enum
 {
-    INA219_MODE_POWER_DOWN = 0, //!< Power-done
+    INA219_MODE_POWER_DOWN = 0, //!< Power-down
     INA219_MODE_TRIG_SHUNT,     //!< Shunt voltage, triggered
     INA219_MODE_TRIG_BUS,       //!< Bus voltage, triggered
     INA219_MODE_TRIG_SHUNT_BUS, //!< Shunt and bus, triggered
@@ -534,15 +534,14 @@ esp_err_t ina219_calibrate(ina219_t *dev, float max_current_ma, float shunt_mohm
     
     // Calculate Power LSB (20 * Current LSB)
     dev->p_lsb = 20 * current_lsb;
-    
+
     // Calculate calibration value
     // Cal = 0.04096 / (Current_LSB * R_shunt)
     // Note: 0.04096 is internal fixed value, Current_LSB in A, R_shunt in Ohm
-    uint16_t cal = (uint16_t)(40960.0 / (current_lsb * shunt_mohm));
-    
-    ESP_LOGD(TAG, "Calibration: shunt=%.3f mOhm, max_current=%.1f mA, cal=0x%04x, current_lsb=%.6f mA, power_lsb=%.6f mW",
-             shunt_mohm, max_current_ma, cal, current_lsb, dev->p_lsb);
-    
+    uint16_t cal = (uint16_t)(40960.0 / (current_lsb * (shunt_mohm / 1000.0)));
+
+    ESP_LOGD(TAG, "Calibration: shunt=%.3f mOhm, max_current=%.1f mA, cal=0x%04x, current_lsb=%.6f mA, power_lsb=%.6f mW", shunt_mohm, max_current_ma, cal, current_lsb, dev->p_lsb);
+
     return write_reg_16(dev, REG_CALIBRATION, cal);
 }
 
@@ -599,19 +598,19 @@ esp_err_t ina219_get_current(ina219_t *dev, float *current)
     
     // Current register is signed, value in Current LSB units
     *current = raw * dev->i_lsb;  // Result in mA
-    
+
     return ESP_OK;
 }
 
 esp_err_t ina219_get_power(ina219_t *dev, float *power)
 {
     CHECK_ARG(dev && power);
-    
-    uint16_t raw;
-    CHECK(read_reg_16(dev, REG_POWER, &raw));
+
+    int16_t raw;
+    CHECK(read_reg_16(dev, REG_POWER, (uint16_t *)&raw));
     
     // Power register value in Power LSB units
-    *power = raw * dev->p_lsb;  // Result in mW
-    
+    *power = raw * dev->p_lsb; // Result in mW
+
     return ESP_OK;
 }
